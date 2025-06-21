@@ -1,6 +1,6 @@
 <h1 align="center">📹 VideoNotes</h1>
 
-<img src="https://i.imgur.com/kK7KXlM.png" alt="VideoNotes Banner">
+<img src="https://i.imgur.com/ioYDPlY.png" alt="VideoNotes Banner">
 
 **Convierte cualquier video de YouTube en texto claro, resumido y listo para compartir.**
 
