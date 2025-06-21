@@ -90,7 +90,6 @@ Crea un issue o abre un Pull Request. ¡Toda ayuda es bienvenida!
 
 ---
 
-## 🧑‍💻 Autor y Créditos
+## 🧑‍💻 Autor
 
-**VideoNotes** es un proyecto de productividad potenciado por IA.
 Desarrollado con ❤️ por Alejandro David Arzola Saavedra
