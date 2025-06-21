@@ -40,6 +40,12 @@ Transforma tus transcripciones o resúmenes en documentos PDF listos para archiv
 
 ---
 
+## 📱 Capturas de Pantalla
+
+<div align="center">
+  <img src="https://i.imgur.com/7m6KfHc.png" height="400"><img src="https://i.imgur.com/PUkN9kd.png" height="400">
+</div>
+
 ## 📦 Instalación local (modo desarrollo)
 
 1. Clona este repositorio:
