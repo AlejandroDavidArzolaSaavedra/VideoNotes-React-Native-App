@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="App to turn YouTube videos into smart notes" />
+  <title>VideoNotes</title>
+
+  <!-- OG and Twitter -->
+  <meta property="og:title" content="VideoNotes" />
+  <meta property="og:description" content="App to turn YouTube videos into smart notes" />
+  <meta property="og:image" content="https://videonotes.carrd.co/assets/images/card.jpg?v=f29b5221" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://videonotes.carrd.co" />
+  <meta property="og:site_name" content="VideoNotes" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Custom styles -->
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0f1117;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding: 2rem;
+      line-height: 1.6;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    header img {
+      max-width: 100px;
+      margin-bottom: 1rem;
+      background-color: transparent;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    p.lead {
+      font-size: 1.3rem;
+      color: #cccccc;
+      margin-bottom: 2rem;
+    }
+
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    section {
+      margin-bottom: 2.5rem;
+    }
+
+    h2 {
+      font-size: 1.6rem;
+      color: #00c896;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: #dddddd;
+    }
+
+    ul.tech-stack {
+      list-style: none;
+      padding: 0;
+      margin-top: 1rem;
+    }
+
+    ul.tech-stack li {
+      background: #1d1f25;
+      display: inline-block;
+      margin: 0.3rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.95rem;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 4rem;
+      font-size: 0.85rem;
+      color: #777;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      h2 {
+        font-size: 1.3rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="https://i.imgur.com/zuvsrvn.png" style="width:200px;" alt="VideoNotes Logo">
+    <h1>VideoNotes</h1>
+    <p class="lead">VideoNotes is the app that turns any YouTube video into a clear, searchable, and summarized document. Just paste the URL and the app does the rest.</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>Video to Text</h2>
+      <p>Simple and direct. Copy the link of any YouTube video and let the app automatically convert it into text. Save, share, or summarize the content however you like—no hassle.</p>
+    </section>
+
+    <section>
+      <h2>AI to PDF</h2>
+      <p>Save time with Artificial Intelligence. With VideoNotes, AI automatically summarizes those long videos you usually postpone due to lack of time, offering you a condensed version in just a few lines so you don’t miss what matters most.</p>
+    </section>
+    
+    <div style="align:center;">
+      <img src="https://i.imgur.com/FZt3MDe.png" style="width:200px;">
+    </div>
+    <section>
+      <h2>Tech Stack</h2>
+      <ul class="tech-stack">
+        <li>React Native</li>
+        <li>React Navigation</li>
+        <li>Clean Architecture</li>
+        <li>Supabase</li>
+        <li>Zustand</li>
+        <li>PostgreSQL</li>
+        <li>LLM LLama</li>
+        <li>OpenRouter</li>
+      </ul>
+    </section>
+  </main>
+
+</body>
+</html>
