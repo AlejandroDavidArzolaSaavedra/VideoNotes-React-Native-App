@@ -70,18 +70,6 @@ npx expo start
 
 > Asegúrate de tener [Expo](https://docs.expo.dev/) instalado y funcionando.
 
----
-
-## ✅ Testing
-
-Para correr pruebas unitarias:
-
-```bash
-  npm run test
-```
-
----
-
 ## 🙌 Contribuir
 
 ¿Tienes ideas, encontraste un bug o quieres colaborar?
