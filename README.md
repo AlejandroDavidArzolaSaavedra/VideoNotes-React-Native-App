@@ -32,7 +32,6 @@ Transforma tus transcripciones o resúmenes en documentos PDF listos para archiv
 
 * **React Native** – interfaz móvil moderna y fluida
 * **React Navigation** – navegación intuitiva entre pantallas
-* **Clean Architecture** – código mantenible y escalable
 * **Supabase** – backend serverless y autenticación
 * **Zustand** – manejo de estado simple y eficiente
 * **PostgreSQL** – base de datos relacional robusta
