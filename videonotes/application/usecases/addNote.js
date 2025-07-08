@@ -10,4 +10,3 @@ export const addNote = async (noteRepository, note) => {
         throw error;
     }
 }
-// This function adds a new note to the repository.

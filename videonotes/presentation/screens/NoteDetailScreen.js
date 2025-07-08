@@ -11,8 +11,7 @@ export default function NoteDetailScreen() {
   const { note } = params;
 
   const handleCopyContent = () => {
-    // Implementar lógica de copiado
-    ToastAndroid.show('Texto copiado al portapapeles', ToastAndroid.SHORT);
+   ToastAndroid.show('Texto copiado al portapapeles', ToastAndroid.SHORT);
   };
 
   const handleDeleteNote = () => {
@@ -27,8 +26,7 @@ export default function NoteDetailScreen() {
         {
           text: 'Eliminar',
           onPress: () => {
-            // Aquí deberías implementar la lógica para eliminar la nota
-            navigation.goBack();
+           navigation.goBack();
             ToastAndroid.show('Nota eliminada', ToastAndroid.SHORT);
           },
           style: 'destructive',

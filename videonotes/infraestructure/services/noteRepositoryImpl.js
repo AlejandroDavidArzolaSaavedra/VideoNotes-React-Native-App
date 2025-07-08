@@ -1,6 +1,5 @@
 import { NoteRepository } from '../domain/noteRepository.js';
 
-// TODO: IMPLEMENTAR USANDO 
 export default class NoteRepositoryImpl extends NoteRepository {
     async getAll() {
         const notes = await window.electronAPI.getAllNotes();

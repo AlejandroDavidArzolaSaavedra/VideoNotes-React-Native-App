@@ -109,7 +109,6 @@ export default function ListSubtitlesScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {/* Header idéntico al HomeScreen */}
       <View style={styles.header}>
         <Button 
           onPress={() => navigation.goBack()} 
@@ -145,7 +144,6 @@ export default function ListSubtitlesScreen({ navigation }) {
 
       <Text style={styles.title}>Mis Notas</Text>
       
-      {/* Barra de búsqueda */}
       <View style={styles.searchContainer}>
         <TextInput
           placeholder="Buscar notas..."
@@ -165,7 +163,6 @@ export default function ListSubtitlesScreen({ navigation }) {
         ) : null}
       </View>
 
-      {/* Lista de notas */}
       <SafeAreaView style={styles.listContainer}>
         {filteredNotes.length > 0 ? (
           <FlatList

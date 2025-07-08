@@ -54,7 +54,7 @@ export default function HomeScreen({ onLogout }) {
       const response = await fetch('https://xtwpnwclvxaujjdlnlxr.supabase.co/functions/v1/summarize', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0d3Bud2NsdnhhdWpqZGxubHhyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg2Mjg3MTYsImV4cCI6MjA2NDIwNDcxNn0.aj2gd2H6fxYKPkslp266N2jHfzVbUKmpJWEULs2MXYk`,
+          'Authorization': `Bearer token`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -95,29 +95,26 @@ const handleShareSummaryPDF = async () => {
     const fileName = `resumen_${title.replace(/[^a-z0-9]/gi, '_')}_${Date.now()}.pdf`;
     const path = `${FileSystem.documentDirectory}${fileName}`;
 
-    // 1. Primero generar el PDF
+
     const { uri } = await Print.printToFileAsync({
       html: htmlContent,
-      width: 612,   // Ancho estándar para papel carta (8.5 pulgadas en puntos)
-      height: 792,   // Alto estándar para papel carta (11 pulgadas en puntos)
+      width: 612,  
+      height: 792,  
       base64: false
     });
 
-    // 2. Mover el archivo generado a una ubicación permanente
     const newPath = `${FileSystem.documentDirectory}${fileName}`;
     await FileSystem.moveAsync({
       from: uri,
       to: newPath
     });
 
-    // 3. Verificar que el archivo existe
     const fileInfo = await FileSystem.getInfoAsync(newPath);
     if (!fileInfo.exists) {
       throw new Error('El archivo PDF no se creó correctamente');
     }
 
-    // 4. Compartir el archivo
-    await Sharing.shareAsync(newPath, {
+   await Sharing.shareAsync(newPath, {
       mimeType: 'application/pdf',
       dialogTitle: `Compartir Resumen: ${title} (PDF)`,
       UTI: 'com.adobe.pdf'
@@ -139,7 +136,6 @@ const handleShareSummaryPDF = async () => {
     setShowActions(false);
   };
 
-  // Función para navegar a la lista de subtítulos
   const handleNavigateToList = () => {
     navigation.navigate('ListSubtitlesScreen');
   };
@@ -183,7 +179,6 @@ const handleShareSummaryPDF = async () => {
   };
 
   const generateHTML = (content, title = 'Subtítulos de YouTube') => {
-    // Dividir el texto en párrafos basados en puntos o saltos de línea
     const paragraphs = content.split(/(?<=[.!?])\s+/).filter(p => p.trim().length > 0);
     
     const escapedContent = paragraphs
@@ -421,7 +416,6 @@ const handleShareSummaryPDF = async () => {
 
       <ActionSheet ref={actionSheetRef} containerStyle={styles.actionSheet}>
         <View style={styles.actionSheetContent}>
-         {/* Opción para exportar resumen PDF (sólo visible si hay resumen) */}
         {summaryText ? (
           <TouchableOpacity 
             style={[styles.actionItem, {borderLeftColor: '#F4B400'}]} 
@@ -605,9 +599,9 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
   flexDirection: 'row',
-  justifyContent: 'space-between', // o 'center' si prefieres centrarlos
+  justifyContent: 'space-between',
   paddingHorizontal: 10,
-    marginBottom: 20, // espacio entre botones y el resto del contenido
+    marginBottom: 20,
 },
 
 logoutButton: {
@@ -615,8 +609,8 @@ logoutButton: {
   borderRadius: 8,
   paddingVertical: 10,
   paddingHorizontal: 12,
-  marginHorizontal: 5, // espaciado entre botones
-  flex: 1, // distribuye espacio equitativamente (opcional)
+  marginHorizontal: 5, 
+  flex: 1,
 },
   textContainer: {
     flex: 1,

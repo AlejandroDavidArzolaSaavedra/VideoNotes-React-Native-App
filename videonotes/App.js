@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { OrientationProvider } from './OrientationContext';
 import LoginScreen from './presentation/screens/LoginScreen';
 import HomeScreen from './presentation/screens/HomeScreen';
-import ListSubtitlesScreen from './presentation/screens/ListSubtitlesScreen'; // Asegúrate de importar este si lo usas
+import ListSubtitlesScreen from './presentation/screens/ListSubtitlesScreen'; 
 import NoteDetailScreen from './presentation/screens/NoteDetailScreen';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
