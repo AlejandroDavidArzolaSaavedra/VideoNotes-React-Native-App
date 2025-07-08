@@ -1,0 +1,167 @@
+import React, { useState, useRef, useEffect } from 'react';
+import { StyleSheet, View, ActivityIndicator } from 'react-native';
+import { WebView } from 'react-native-webview';
+
+export default function App() {
+  const [loading, setLoading] = useState(true);
+  const webviewRef = useRef(null);
+  const [downloadCaptured, setDownloadCaptured] = useState(false);
+  const [downloadUrl, setDownloadUrl] = useState(null);
+
+  const videoUrl = "https://www.youtube.com/watch?v=0jNg2lG2dQg&list=RDEMpuIyhplb4bpOcSwg9rmveA&index=15";
+  const downsubUrl = `https://downsub.com/?url=${encodeURIComponent(videoUrl)}`;
+
+  // Cuando tenemos la URL de descarga, hacemos fetch para obtener contenido y mostrarlo
+  useEffect(() => {
+    if (downloadUrl) {
+      fetch(downloadUrl)
+        .then(response => response.text())
+        .then(text => {
+          console.log("Contenido descargado (texto):", text);
+          // Aquí puedes hacer más cosas con el texto recibido
+        })
+        .catch(err => {
+          console.error("Error al obtener contenido de la URL de descarga:", err);
+        });
+    }
+  }, [downloadUrl]);
+
+  const injectedJS = `
+    (function() {
+      let downloadIntercepted = false;
+
+      // Interceptamos addEventListener para capturar clicks en enlaces de descarga TXT solo una vez
+      const originalAddEventListener = HTMLAnchorElement.prototype.addEventListener;
+      HTMLAnchorElement.prototype.addEventListener = function(type, listener, options) {
+        if (type === 'click') {
+          const modifiedListener = function(e) {
+            if (downloadIntercepted) {
+              return;
+            }
+            downloadIntercepted = true;
+            const downloadUrl = this.href;
+            window.ReactNativeWebView.postMessage("download-url:" + downloadUrl);
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+          };
+          return originalAddEventListener.call(this, type, modifiedListener, options);
+        }
+        return originalAddEventListener.call(this, type, listener, options);
+      };
+
+      // Buscar el botón TXT y simular click solo una vez
+      function findAndSimulateTxtButton() {
+        const buttons = document.querySelectorAll('button');
+        for(let btn of buttons) {
+          if(btn.innerText.trim() === 'TXT') {
+            btn.addEventListener('click', function(e) {
+              e.preventDefault();
+              if (!downloadIntercepted) {
+                window.ReactNativeWebView.postMessage("txt-button-clicked");
+              }
+              return false;
+            });
+
+            const clickEvent = new MouseEvent('click', {
+              view: window,
+              bubbles: true,
+              cancelable: true
+            });
+            btn.dispatchEvent(clickEvent);
+            return true;
+          }
+        }
+        return false;
+      }
+
+      // Interceptamos fetch y XHR, pero solo enviamos mensaje la primera vez
+      const originalFetch = window.fetch;
+      window.fetch = function() {
+        if ((arguments[0].includes('download') || arguments[0].includes('subtitle')) && !downloadIntercepted) {
+          downloadIntercepted = true;
+          window.ReactNativeWebView.postMessage("fetch-download:" + arguments[0]);
+          return Promise.reject(new Error('Download blocked'));
+        }
+        return originalFetch.apply(this, arguments);
+      };
+
+      const originalOpen = XMLHttpRequest.prototype.open;
+      XMLHttpRequest.prototype.open = function() {
+        if ((arguments[1].includes('download') || arguments[1].includes('subtitle')) && !downloadIntercepted) {
+          downloadIntercepted = true;
+          window.ReactNativeWebView.postMessage("xhr-download:" + arguments[1]);
+          this.abort();
+          return;
+        }
+        originalOpen.apply(this, arguments);
+      };
+
+      let tries = 0;
+      const interval = setInterval(() => {
+        if (findAndSimulateTxtButton() || tries > 10) {
+          clearInterval(interval);
+          if (tries > 10) {
+            window.ReactNativeWebView.postMessage("txt-button-not-found");
+          }
+        }
+        tries++;
+      }, 1000);
+    })();
+  `;
+
+  return (
+    <View style={styles.container}>
+      {loading && <ActivityIndicator size="large" color="#0000ff" style={styles.loading} />}
+      <WebView
+        ref={webviewRef}
+        source={{ uri: downsubUrl }}
+        onLoadEnd={() => setLoading(false)}
+        injectedJavaScript={injectedJS}
+        onMessage={(event) => {
+          const message = event.nativeEvent.data;
+
+          if (message.startsWith("download-url:") && !downloadCaptured) {
+            setDownloadCaptured(true);
+            const url = message.replace("download-url:", "");
+            console.log("URL de descarga interceptada:", url);
+            setDownloadUrl(url);  // Guardamos para fetch
+          }         
+        }}
+        javaScriptEnabled={true}
+        domStorageEnabled={true}
+        startInLoadingState={true}
+        onShouldStartLoadWithRequest={(request) => {
+          if (request.url.includes('download') || request.url.includes('subtitle')) {
+       
+            fetch(request.url)
+              .then(response => response.text())
+              .then(text => {
+                console.log("Contenido descargado (texto):", text);
+                // Aquí puedes hacer más cosas con el texto recibido
+              })
+              .catch(err => {
+                console.error("Error al obtener contenido de la URL de descarga:", err);
+              });
+            return false;
+          }
+          return true;
+        }}
+        style={{ flex: 1, opacity: loading ? 0 : 1 }}
+      />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  loading: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginLeft: -25,
+    marginTop: -25,
+  },
+});
